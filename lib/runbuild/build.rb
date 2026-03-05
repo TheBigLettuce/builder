@@ -6,6 +6,18 @@ module Build
   include Targets
   include Targets::Paths
 
+  def run_arm64(dir)
+    check_if_linux
+
+    Cargo.check_conf(dir)
+    Rustup.check
+    Rustup.check_targets([TARGET_LINUX_AARCH64])
+
+    check_lib_dirs_exists(dir)
+
+    Linux.new.run(dir)
+  end
+
   def run_all(dir)
     check_if_linux
 

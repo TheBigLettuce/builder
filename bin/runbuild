@@ -16,6 +16,17 @@ class Main
 
     path.realpath.to_s
   end
+
+  def self.process_argv_arm64(argv)
+    path = Pathname.new argv.first.strip
+    raise "argument isn't a directory" unless path.directory?
+
+    path.realpath.to_s
+  end
 end
 
-Main.new.run_all Main.process_argv ARGV
+if ARGV.length == 2 && ARGV[1] == "arm_64"
+  Main.new.run_arm64 Main.process_argv_arm64 ARGV
+else
+  Main.new.run_all Main.process_argv ARGV
+end
